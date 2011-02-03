@@ -16,16 +16,15 @@
  * Authors: Caner Candan <caner@candan.fr>, http://caner.candan.fr
  */
 
-#include <slepc.h>
+#ifndef _slepc_cxx_
+#define _slepc_cxx_
+
+#include <petsc_cxx/petsc_cxx>
 
 #include "Parser.h"
 
-using namespace Slepc;
+#endif // !_slepc_cxx_
 
-Context::~Context() { SlepcFinalize(); }
-
-Parser::Parser(int& ac, char**& av, std::string help /*= ""*/, char* file /*= 0*/)
-{
-    help += "\n\n";
-    SlepcInitialize( &ac, &av, file, help.c_str() );
-}
+// Local Variables:
+// mode: C++
+// End:

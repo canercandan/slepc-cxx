@@ -16,13 +16,16 @@
  * Authors: Caner Candan <caner@candan.fr>, http://caner.candan.fr
  */
 
-#ifndef _Slepc_h
-#define _Slepc_h
+#include <slepc.h>
 
-// C++ binding for Slepc
-namespace Slepc
+#include "Parser.h"
+
+namespace slepc_cxx
 {
-    // TOADD
-};
 
-#endif // !_Slepc_h
+    Parser::Parser(int& ac, char**& av, std::string help /*= ""*/, char* file /*= 0*/) : _ac(ac), _av(av), _help(help + "\n\n"), _file(file) {}
+
+    void Parser::create() const { SlepcInitialize( &_ac, &_av, _file, _help.c_str() ); }
+    void Parser::destroy() const { SlepcFinalize(); }
+
+}

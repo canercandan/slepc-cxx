@@ -16,24 +16,31 @@
  * Authors: Caner Candan <caner@candan.fr>, http://caner.candan.fr
  */
 
-#ifndef _Parser_h
-#define _Parser_h
+#ifndef _slepc_cxx_Parser_h
+#define _slepc_cxx_Parser_h
 
 #include <string>
 
-namespace Slepc
-{
-    class Context
-    {
-    public:
-	~Context();
-    };
+#include <petsc_cxx/AbstractParser.h>
 
-    class Parser : public Context
+namespace slepc_cxx
+{
+    class Parser : public petsc_cxx::AbstractParser
     {
     public:
 	Parser(int& ac, char**& av, std::string help = "", char* file = 0);
+
+	void create() const;
+	void destroy() const;
+
+	std::string className() const { return "Parser"; }
+
+    private:
+	int& _ac;
+	char**& _av;
+	std::string _help;
+	char* _file;
     };
 }
 
-#endif // !_Parser_h
+#endif // !_slepc_cxx_Parser_h

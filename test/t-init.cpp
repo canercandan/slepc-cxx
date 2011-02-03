@@ -18,19 +18,12 @@
 
 // file:///usr/share/doc/petsc3.1-doc/src/vec/vec/examples/tutorials/ex1.c.html
 
-#include <iostream>
-
-#include <petsc.h>
-
-#include "Object.h"
-#include "Parser.h"
-#include "Printable.h"
-
-using namespace Slepc;
+#include <slepc_cxx/slepc_cxx>
 
 int main(int ac, char** av)
 {
-    Parser parser(ac, av, "How to init a program with slepc-cxx.");
+    slepc_cxx::Parser parser(ac, av, "How to init a program with slepc-cxx.");
+    petsc_cxx::Context context(parser);
 
     PetscMPIInt rank,size;
 
