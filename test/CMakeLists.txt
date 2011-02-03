@@ -10,6 +10,7 @@ SET(SOURCES
   t-init
   t-hello
   t-eigenproblem
+  t-ex1
   )
 
 FOREACH(current ${SOURCES})

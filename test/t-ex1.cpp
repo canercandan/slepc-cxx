@@ -16,16 +16,20 @@
  * Authors: Caner Candan <caner@candan.fr>, http://caner.candan.fr
  */
 
+// Binding of the example available on file:///usr/share/doc/petsc3.1-doc/src/vec/vec/examples/tutorials/ex1.c.html
+
 #include <slepc_cxx/slepc_cxx>
 
-#include <slepceps.h>
+static char help[] = "Standard symmetric eigenproblem corresponding to the Laplacian operator in 1 dimension.\n\n"
+  "The command line options are:\n"
+  "  -n <n>, where <n> = number of grid subdivisions = matrix dimension.\n\n";
 
 int main(int ac, char** av)
 {
-    slepc_cxx::Parser parser(ac, av, "Standard symmetric eigenproblem corresponding to the Laplacian operator in 1 dimension.");
+    slepc_cxx::Parser parser(ac, av, help);
     petsc_cxx::Context context( parser );
 
-    EPS eps;
+    petsc_cxx::Matrix< Scalar > A;
 
     return 0;
 }
