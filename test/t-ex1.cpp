@@ -29,7 +29,7 @@ int main(int ac, char** av)
     slepc_cxx::Parser parser(ac, av, help);
     petsc_cxx::Context context( parser );
 
-    petsc_cxx::Matrix< Scalar > A;
+    petsc_cxx::Matrix< petsc_cxx::Scalar > A;
 
     return 0;
 }
