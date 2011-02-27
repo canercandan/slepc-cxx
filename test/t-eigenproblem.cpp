@@ -25,7 +25,5 @@ int main(int ac, char** av)
     slepc_cxx::Parser parser(ac, av, "Standard symmetric eigenproblem corresponding to the Laplacian operator in 1 dimension.");
     petsc_cxx::Context context( parser );
 
-    EPS eps;
-
     return 0;
 }

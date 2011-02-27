@@ -23,6 +23,8 @@
 
 #include "Parser.h"
 
+#include "EPSolver.h"
+
 #endif // !_slepc_cxx_
 
 // Local Variables:

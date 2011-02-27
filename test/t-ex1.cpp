@@ -24,12 +24,50 @@ static char help[] = "Standard symmetric eigenproblem corresponding to the Lapla
   "The command line options are:\n"
   "  -n <n>, where <n> = number of grid subdivisions = matrix dimension.\n\n";
 
+typedef petsc_cxx::Scalar T;
+
 int main(int ac, char** av)
 {
     slepc_cxx::Parser parser(ac, av, help);
     petsc_cxx::Context context( parser );
 
-    petsc_cxx::Matrix< petsc_cxx::Scalar > A;
+    slepc_cxx::EPSolver<T> eps;
+
+    PetscInt n=30, i, Istart, Iend, col[3];
+    PetscTruth FirstBlock=PETSC_FALSE, LastBlock=PETSC_FALSE;
+    PetscScalar value[3];
+
+    petsc_cxx::Matrix<T> A(n);
+
+    MatGetOwnershipRange(A,&Istart,&Iend);
+
+    if (Istart==0) FirstBlock=PETSC_TRUE;
+    if (Iend==n) LastBlock=PETSC_TRUE;
+
+    value[0]=-1.0; value[1]=2.0; value[2]=-1.0;
+
+    for( i = (FirstBlock? Istart+1: Istart); i < (LastBlock? Iend-1: Iend); i++ )
+	{
+	    col[0]=i-1; col[1]=i; col[2]=i+1;
+	    MatSetValues(A,1,&i,3,col,value,INSERT_VALUES);
+	}
+    if (LastBlock)
+	{
+	    i=n-1; col[0]=n-2; col[1]=n-1;
+	    MatSetValues(A,1,&i,2,col,value,INSERT_VALUES);
+	}
+    if (FirstBlock)
+	{
+	    i=0; col[0]=0; col[1]=1; value[0]=2.0; value[1]=-1.0;
+	    MatSetValues(A,1,&i,2,col,value,INSERT_VALUES);
+	}
+
+    MatAssemblyBegin(A,MAT_FINAL_ASSEMBLY);
+    MatAssemblyEnd(A,MAT_FINAL_ASSEMBLY);
+
+    eps(A);
+
+    std::cout << eps;
 
     return 0;
 }
